@@ -65,7 +65,7 @@ GazeboRosWirelessReceiver::~GazeboRosWirelessReceiver()
 void GazeboRosWirelessReceiver::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
   // Get then name of the parent sensor
-  sensor_ = boost::dynamic_pointer_cast<sensors::Sensor>(_sensor);
+  sensor_ = std::dynamic_pointer_cast<sensors::Sensor>(_sensor);
   if (!sensor_)
   {
     gzthrow("GazeboRosWirelessReceiver requires a Sensor as its parent");
@@ -173,8 +173,8 @@ void GazeboRosWirelessReceiver::Update()
   geometry_msgs::PoseStamped receiver_pose_;
 
   //receiver's pose in the world
-  math::Pose referencePose = 
-      sensor_->GetPose() + this->parentEntity->GetWorldPose();
+  math::Pose referencePose = this->parentEntity->GetWorldPose();
+      // sensor_->GetPose() + this->parentEntity->GetWorldPose();
 
   receiver_pose_.header.frame_id = "/world";
   receiver_pose_.header.stamp.sec =  (world->GetSimTime()).sec;
