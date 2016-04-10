@@ -50,6 +50,7 @@
  *
  */
 
+#include <iostream>
 #include <hector_gazebo_thermal_camera/gazebo_ros_thermal_camera.h>
 
 #include <gazebo/sensors/Sensor.hh>
@@ -57,6 +58,7 @@
 
 #include <sensor_msgs/image_encodings.h>
 
+using namespace std;
 namespace gazebo
 {
 
@@ -170,12 +172,19 @@ void GazeboRosThermalCamera_<Base>::PutCameraData(const unsigned char *_src)
 
     std::vector<uint8_t>& data (this->image_msg_.data);
     data.resize(size);
-
+    
     size_t img_index = 0;
+//todo     
+// <<<<<<< HEAD
 
     for (size_t i = 0; i < size; i = i+2){
       float temp = 0;
       if ((_src[img_index] >254) && (_src[img_index+1] < 1) && (_src[img_index+2] < 1)){
+// =======
+//     for (size_t i = 0; i < size; ++i){
+//       if ((_src[img_index] >254) && (_src[img_index+1] < 1) && (_src[img_index+2] < 1))
+//       {
+// >>>>>>> indigo-devel
         //RGB [255,0,0] translates to white (white hot)
         temp = (273.15 + 100.0);
 

@@ -268,6 +268,7 @@ namespace gazebo
 
     odom_transform_= odom_transform_ * this->getTransformForMotion(linear_vel.x, angular_vel.z, step_time);
 
+
     tf::poseTFToMsg(odom_transform_, odom_.pose.pose);
 
     if (true){
@@ -293,6 +294,7 @@ namespace gazebo
 
     odom_.twist.twist.angular.z = angular_vel.z;
     odom_.twist.twist.linear.x  = linear_vel.x;
+
 
     odom_.header.stamp = current_time;
     odom_.header.frame_id = odom_frame;
@@ -327,7 +329,6 @@ namespace gazebo
     }else{
       odom_.twist.covariance[35] = 100.0;
     }
-
 
 
 
