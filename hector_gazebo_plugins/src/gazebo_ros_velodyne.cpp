@@ -58,7 +58,7 @@ GazeboRosVelodyne::~GazeboRosVelodyne()
 void GazeboRosVelodyne::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
   // Get then name of the parent sensor
-  sensor_ = boost::dynamic_pointer_cast<sensors::RaySensor>(_sensor);
+  sensor_ = std::dynamic_pointer_cast<sensors::RaySensor>(_sensor);
   if (!sensor_)
   {
     gzthrow("GazeboRosVelodyne requires a Ray Sensor as its parent");
@@ -174,12 +174,17 @@ void GazeboRosVelodyne::Update()
   if(vertialRangeCnt*rangeCnt == 0) return;
 
   
+#if GAZEBO_MAJOR_VERSION >= 6
+  double maxAngle = sensor_->AngleMax().Radian();
+  double minAngle = sensor_->AngleMin().Radian();
+  double vertialMaxAngle = sensor_->VerticalAngleMax().Radian();
+  double vertialMinAngle = sensor_->VerticalAngleMin().Radian();
+#else 
   double maxAngle = sensor_->GetAngleMax().Radian();
   double minAngle = sensor_->GetAngleMin().Radian();
-  
   double vertialMaxAngle = sensor_->GetVerticalAngleMax().Radian();
   double vertialMinAngle = sensor_->GetVerticalAngleMin().Radian();
-  
+ #endif  
 
   // std::cout << "count: " << vertialRangeCnt << "  " 
   //      << rangeCnt << "  " 
@@ -212,7 +217,8 @@ void GazeboRosVelodyne::Update()
   
   for(int i = 0; i < vertialRangeCnt; ++i) 
   {
-    double vertialAngle = vertialMinAngle + delta_vertial_angle*i; 
+    // double vertialAngle = vertialMinAngle + delta_vertial_angle*i; 
+    double vertialAngle = vertialMaxAngle - delta_vertial_angle*i; 
     double angle = minAngle;
     double cos_va = cos(vertialAngle);
     double sin_va = sin(vertialAngle);

@@ -100,9 +100,9 @@ add_library(hector_gazebo_ros_wireless_receiver src/gazebo_ros_wireless_receiver
 target_link_libraries(hector_gazebo_ros_wireless_receiver ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 add_dependencies(hector_gazebo_ros_wireless_receiver ${PROJECT_NAME}_gencfg)
 
-# add_library(hector_gazebo_ros_velodyne src/gazebo_ros_velodyne.cpp)
-# target_link_libraries(hector_gazebo_ros_velodyne ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
-# add_dependencies(hector_gazebo_ros_velodyne ${PROJECT_NAME}_gencfg)
+add_library(hector_gazebo_ros_velodyne src/gazebo_ros_velodyne.cpp)
+target_link_libraries(hector_gazebo_ros_velodyne ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
+add_dependencies(hector_gazebo_ros_velodyne ${PROJECT_NAME}_gencfg)
 
 
 # add_library(gazebo_ros_create src/gazebo_ros_create.cpp)
